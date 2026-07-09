@@ -12,10 +12,10 @@ from openai import OpenAI  # Added for AI search support
 # ==========================================
 st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
 
-# Clean, self-contained CSS configuration
+# Single, clean, isolated layout string configuration
 css_style = """
 <style>
-    /* Main Layout Styles */
+    /* Main App Layout Styles */
     .stApp { background-color: #fdf6e3; }
     [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
     .sidebar-title { color: #1e3d59; font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #1e3d59; margin-bottom: 15px; }
@@ -38,7 +38,7 @@ css_style = """
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
     
-    /* Target the top header wrapper shell and drop elements cleanly */
+    /* Forceful block to drop the top header and red crown toolbar footprint completely */
     header, [data-testid="stHeader"], .stHeader, .stAppDeployButton, [data-testid="stToolbar"] {
         display: none !important; 
         visibility: hidden !important; 
@@ -64,10 +64,7 @@ st.components.v1.html("""
             'div[class*="viewerBadge"]'
         ];
         selectors.forEach(selector => {
-            // Clean local iframe context
             document.querySelectorAll(selector).forEach(el => el.remove());
-            
-            // Clean outer layout shell frame context
             if (window.parent && window.parent.document) {
                 window.parent.document.querySelectorAll(selector).forEach(el => el.remove());
             }
