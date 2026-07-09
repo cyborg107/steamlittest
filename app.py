@@ -7,10 +7,14 @@ import hashlib
 import re
 from openai import OpenAI  # Added for AI search support
 
+
 # ==========================================
 # 1. Styles, Configuration, and Layout Clean
 # ==========================================
-st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
+st.set_page_config(page_title="My Library · Flagship Edition", layout="wide", page_icon="📚")
+
+# (You can place your standard .book-tile and .sidebar-title CSS here if needed, 
+# but you no longer need any header or footer hiding scripts!)
 
 # Single, clean, isolated layout string configuration
 css_style = """
