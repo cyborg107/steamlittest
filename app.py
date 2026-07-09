@@ -50,6 +50,7 @@ st.markdown("""
 st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
 
 # 1. Pure CSS Fallback
+# 1. Pure CSS Fallback
 st.markdown("""
 <style>
     .stApp { background-color: #fdf6e3; }
