@@ -43,34 +43,58 @@ st.markdown("""
     .badge-admin { background-color: #ff6e40; color: #fff; }
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
-    /* 1. Completely hide the footer */
-footer {visibility: hidden !important; display: none !important;}
 
-/* 2. Overrides the header wrapper layout directly via global class attributes */
-div[data-testid="stAppViewBlockContainer"] > header,
-header, 
-[data-testid="stHeader"], 
-.stHeader,
-#tabs-bui3-tab-0 + div {
-    display: none !important; 
-    visibility: hidden !important; 
-    height: 0px !important;
-}
+    # ==========================================
+# 1. Styles, Configuration, and Layout Clean
+# ==========================================
+st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
 
-/* 3. Target the deployment/crown button by its functional attribute wrapper */
-[class*="stAppDeployButton"], 
-button[title*="Deploy"],
-.stAppDeployButton {
-    display: none !important;
-    visibility: hidden !important;
-}
+# 1. Broad CSS fallback layer
+st.markdown("""
+<style>
+    .stApp { background-color: #fdf6e3; }
+    [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
+    
+    /* Forceful CSS target blocks */
+    footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0px !important;
+        opacity: 0 !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-/* 4. Clear any status spinners, badges, or connection alerts */
-[data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
-div[class*="viewerBadge"] {display: none !important;}
-a[href*="streamlit.io"] {display: none !important;}
+# 2. Hardcore JavaScript layer to destroy the elements if CSS fails
+st.components.v1.html("""
+<script>
+    function removeElements() {
+        // Target all possible selectors for the header, crown button, and footer
+        const selectors = [
+            'header', 
+            '[data-testid="stHeader"]', 
+            '[data-testid="stToolbar"]', 
+            '.stAppDeployButton', 
+            'footer',
+            'div[class*="viewerBadge"]'
+        ];
+        
+        selectors.forEach(selector => {
+            // Check main document
+            document.querySelectorAll(selector).forEach(el => el.remove());
+            // Check inside parent windows (Streamlit Cloud wraps apps in frames)
+            if (window.parent && window.parent.document) {
+                window.parent.document.querySelectorAll(selector).forEach(el => el.remove());
+            }
+        });
+    }
 
-  
+    // Run immediately, and then periodically to catch late-rendering items
+    removeElements();
+    setInterval(removeElements, 500);
+</script>
+""", height=0, width=0)
+
     </style>
 """, unsafe_allow_html=True)
 
