@@ -57,8 +57,7 @@ st.markdown("""
     [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
     
     /* Hide the default Streamlit elements */
-    footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {display: none !important; visibility: hidden !important; height: 0px !important;  opacity: 0 !important; 
-    }
+    footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {display: none !important; visibility: hidden !important; height: 0px !important;  opacity: 0 !important; }
 </style>
 """, unsafe_allow_html=True)
 
