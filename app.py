@@ -44,19 +44,32 @@ st.markdown("""
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
     /* 1. Completely hide the footer */
-    footer {visibility: hidden !important; display: none !important;}
+footer {visibility: hidden !important; display: none !important;}
 
-    /* 2. Target and destroy the top-right toolbar wrapper (hides the deploy button, crown, and menu) */
-    header[data-testid="stHeader"] {display: none !important; visibility: hidden !important;}
-    [data-testid="stToolbar"] {display: none !important; visibility: hidden !important;}
-    .stAppDeployButton {display: none !important;}
+/* 2. Overrides the header wrapper layout directly via global class attributes */
+div[data-testid="stAppViewBlockContainer"] > header,
+header, 
+[data-testid="stHeader"], 
+.stHeader,
+#tabs-bui3-tab-0 + div {
+    display: none !important; 
+    visibility: hidden !important; 
+    height: 0px !important;
+}
 
-    /* 3. Hide the status spinner loading widget */
-    [data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
+/* 3. Target the deployment/crown button by its functional attribute wrapper */
+[class*="stAppDeployButton"], 
+button[title*="Deploy"],
+.stAppDeployButton {
+    display: none !important;
+    visibility: hidden !important;
+}
 
-    /* 4. Clear any "Made with Streamlit" badges or connection alerts */
-    div[class*="viewerBadge"] {display: none !important;}
-    a[href*="streamlit.io"] {display: none !important;}
+/* 4. Clear any status spinners, badges, or connection alerts */
+[data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
+div[class*="viewerBadge"] {display: none !important;}
+a[href*="streamlit.io"] {display: none !important;}
+
   
     </style>
 """, unsafe_allow_html=True)
