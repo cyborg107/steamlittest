@@ -52,26 +52,42 @@ st.components.v1.html("""
 <script>
     function removeElements() {
         const selectors = [
-            /* Target the top header wrapper shell directly */
+        /* Target the top header wrapper shell directly */
             header, [data-testid="stHeader"], .stHeader, .stAppDeployButton, [data-testid="stToolbar"] {
-            display: none !important; 
-            visibility: hidden !important; 
-            height: 0px !important;  
-            opacity: 0 !important; 
+                display: none !important; 
+                visibility: hidden !important; 
+                height: 0px !important;  
+                opacity: 0 !important; 
             }
             footer { display: none !important; visibility: hidden !important; }
-        ];
-        selectors.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => el.remove());
-            if (window.parent && window.parent.document) {
-                window.parent.document.querySelectorAll(selector).forEach(el => el.remove());
+        </style>
+        """
+        st.markdown(css_style, unsafe_allow_html=True)
+        
+        # 2. Hardcore JavaScript to reach into the Streamlit Cloud parent frame
+        st.components.v1.html("""
+        <script>
+            function removeElements() {
+                const selectors = [
+                    'header', 
+                    '[data-testid="stHeader"]', 
+                    '.stHeader', 
+                    '.stAppDeployButton', 
+                    '[data-testid="stToolbar"]', 
+                    'footer', 
+                    'div[class*="viewerBadge"]'
+                ];
+                selectors.forEach(selector => {
+                    document.querySelectorAll(selector).forEach(el => el.remove());
+                    if (window.parent && window.parent.document) {
+                        window.parent.document.querySelectorAll(selector).forEach(el => el.remove());
+                    }
+                });
             }
-        });
-    }
-    removeElements();
-    setInterval(removeElements, 500);
-</script>
-""", height=0, width=0)
+            removeElements();
+            setInterval(removeElements, 500);
+        </script>
+        """, height=0, width=0)
 
 
 # ==========================================
