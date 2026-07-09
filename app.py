@@ -45,7 +45,7 @@ st.markdown("""
     .badge-guest { background-color: #ccc; color: #555; }
     footer {visibility: hidden;}
     /* Hide the deploy button, crown, and development toolbar */
-    [data-testid="stToolbar"] {visibility: none !important; display: none !important;}
+    [data-testid="stToolbar"] {visibility: hidden !important; display: none !important;}
     .stAppDeployButton {display: none !important;}
 
     /* Hide the status spinner widget in the top right */
