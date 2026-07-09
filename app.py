@@ -43,17 +43,19 @@ st.markdown("""
     .badge-admin { background-color: #ff6e40; color: #fff; }
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
-    footer {visibility: hidden;}
-    /* Hide the deploy button, crown, and development toolbar */
-    [data-testid="stToolbar"] {visibility: hidden !important; display: none !important;}
+    /* 1. Completely hide the footer */
+    footer {visibility: hidden !important; display: none !important;}
+
+    /* 2. Target and destroy the top-right toolbar wrapper (hides the deploy button, crown, and menu) */
+    header[data-testid="stHeader"] {display: none !important; visibility: hidden !important;}
+    [data-testid="stToolbar"] {display: none !important; visibility: hidden !important;}
     .stAppDeployButton {display: none !important;}
 
-    /* Hide the status spinner widget in the top right */
+    /* 3. Hide the status spinner loading widget */
     [data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
 
-    /* Hide the "Made with Streamlit" connection badges */
+    /* 4. Clear any "Made with Streamlit" badges or connection alerts */
     div[class*="viewerBadge"] {display: none !important;}
-
     a[href*="streamlit.io"] {display: none !important;}
   
     </style>
