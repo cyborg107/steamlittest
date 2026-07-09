@@ -44,10 +44,18 @@ st.markdown("""
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
     footer {visibility: hidden;}
-    .stAppDeployButton {display: none;}
-    [data-testid="stStatusWidget"] {visibility: hidden;}
-    a[href*="streamlit.io"] {display: none !important;}
+    /* Hide the deploy button, crown, and development toolbar */
+    [data-testid="stToolbar"] {visibility: none !important; display: none !important;}
+    .stAppDeployButton {display: none !important;}
+
+    /* Hide the status spinner widget in the top right */
+    [data-testid="stStatusWidget"] {visibility: hidden !important; display: none !important;}
+
+    /* Hide the "Made with Streamlit" connection badges */
     div[class*="viewerBadge"] {display: none !important;}
+
+    a[href*="streamlit.io"] {display: none !important;}
+  
     </style>
 """, unsafe_allow_html=True)
 
