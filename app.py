@@ -10,7 +10,9 @@ from openai import OpenAI  # Added for AI search support
 # ==========================================
 # 1. Styles, Configuration, and Layout Clean
 # ==========================================
-# Unified, self-contained CSS configuration
+st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
+
+# Clean, self-contained CSS configuration
 css_style = """
 <style>
     /* Main Layout Styles */
