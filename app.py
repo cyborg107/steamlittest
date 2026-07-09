@@ -10,11 +10,10 @@ from openai import OpenAI  # Added for AI search support
 # ==========================================
 # 1. Styles, Configuration, and Layout Clean
 # ==========================================
-st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
-
-# Clean, self-contained CSS string assignment
+# Unified, self-contained CSS configuration
 css_style = """
 <style>
+    /* Main Layout Styles */
     .stApp { background-color: #fdf6e3; }
     [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
     .sidebar-title { color: #1e3d59; font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #1e3d59; margin-bottom: 15px; }
@@ -37,7 +36,7 @@ css_style = """
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
     
-    /* Forceful global overrides to hide the crown toolbar and footer */
+    /* Global Elements Hiding Block */
     footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {
         display: none !important; 
         visibility: hidden !important; 
@@ -57,22 +56,16 @@ st.components.v1.html("""
             '[data-testid="stHeader"]', 
             '[data-testid="stToolbar"]', 
             '.stAppDeployButton', 
-            'footer',
+            'footer', 
             'div[class*="viewerBadge"]'
         ];
-        
         selectors.forEach(selector => {
-            // Remove from local app context
             document.querySelectorAll(selector).forEach(el => el.remove());
-            
-            // Reach up and remove from Streamlit Cloud's outer shell frame
             if (window.parent && window.parent.document) {
                 window.parent.document.querySelectorAll(selector).forEach(el => el.remove());
             }
         });
     }
-
-    // Run instantly and check twice a second for injected elements
     removeElements();
     setInterval(removeElements, 500);
 </script>
