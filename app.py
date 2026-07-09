@@ -8,19 +8,17 @@ import re
 from openai import OpenAI  # Added for AI search support
 
 # ==========================================
-# 1. Styles and Configuration
+# 1. Styles, Configuration, and Layout Clean
 # ==========================================
 st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
 
-st.markdown("""
-    <style>
+# Clean, self-contained CSS string assignment
+css_style = """
+<style>
     .stApp { background-color: #fdf6e3; }
     [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
     .sidebar-title { color: #1e3d59; font-size: 1.5em; font-weight: bold; border-bottom: 2px solid #1e3d59; margin-bottom: 15px; }
-    .book-tile {
-        background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2d1b0;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 330px; display: flex; flex-direction: column;
-    }
+    .book-tile { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2d1b0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 330px; display: flex; flex-direction: column; }
     .tile-title { color: #1e3d59; font-size: 1.1em; font-weight: bold; margin-bottom: 5px; height: 2.8em; overflow: hidden; }
     .tag-container { margin-top: auto; display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
     .tag { padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; color: white; }
@@ -29,37 +27,26 @@ st.markdown("""
     .tag-fnf { background: #2a9d8f; }
     .tag-quiz { background: #6d597a; }
     .tag-il { background: #8888cc; }
-
     .comment-box { background: white; padding: 15px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #eee; border-left: 5px solid #1e3d59; }
-    .comment-meta { color: #888; font-size: 0.8em; margin-bottom: 5px; display: flex; justify-content: space-between;}
-    .blind-box-container {
-        background: white; border: 4px solid #ff6e40; border-radius: 20px; padding: 30px;
-        text-align: center; box-shadow: 0 10px 25px rgba(255,110,64,0.15); margin: 15px 0;
-    }
+    .comment-meta { color: #888; font-size: 0.8em; margin-bottom: 5px; display: flex; justify-content: space-between; }
+    .blind-box-container { background: white; border: 4px solid #ff6e40; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 10px 25px rgba(255,110,64,0.15); margin: 15px 0; }
     .info-card { background: white; padding: 15px; border-radius: 12px; border-left: 6px solid #ff6e40; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-   
     .user-badge { padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px; display: inline-block; }
     .badge-owner { background-color: #ffd700; color: #000; }
     .badge-admin { background-color: #ff6e40; color: #fff; }
     .badge-user { background-color: #2a9d8f; color: #fff; }
     .badge-guest { background-color: #ccc; color: #555; }
-
-    # ==========================================
-# 1. Styles, Configuration, and Layout Clean
-# ==========================================
-st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
-
-# 1. Pure CSS Fallback
-# 1. Pure CSS Fallback
-st.markdown("""
-<style>
-    .stApp { background-color: #fdf6e3; }
-    [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
     
-    /* Hide the default Streamlit elements */
-    footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {display: none !important; visibility: hidden !important; height: 0px !important;  opacity: 0 !important; }
+    /* Forceful global overrides to hide the crown toolbar and footer */
+    footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {
+        display: none !important; 
+        visibility: hidden !important; 
+        height: 0px !important;  
+        opacity: 0 !important; 
+    }
 </style>
-""", unsafe_allow_html=True)
+"""
+st.markdown(css_style, unsafe_allow_html=True)
 
 # 2. Hardcore JavaScript to reach into the Streamlit Cloud parent frame
 st.components.v1.html("""
