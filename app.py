@@ -52,12 +52,14 @@ st.components.v1.html("""
 <script>
     function removeElements() {
         const selectors = [
-            'header', 
-            '[data-testid="stHeader"]', 
-            '[data-testid="stToolbar"]', 
-            '.stAppDeployButton', 
-            'footer', 
-            'div[class*="viewerBadge"]'
+            /* Target the top header wrapper shell directly */
+            header, [data-testid="stHeader"], .stHeader, .stAppDeployButton, [data-testid="stToolbar"] {
+            display: none !important; 
+            visibility: hidden !important; 
+            height: 0px !important;  
+            opacity: 0 !important; 
+            }
+            footer { display: none !important; visibility: hidden !important; }
         ];
         selectors.forEach(selector => {
             document.querySelectorAll(selector).forEach(el => el.remove());
