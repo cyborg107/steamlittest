@@ -49,13 +49,13 @@ st.markdown("""
 # ==========================================
 st.set_page_config(page_title="Smart Library · Flagship Edition", layout="wide", page_icon="📚")
 
-# 1. Broad CSS fallback layer
+# 1. Pure CSS Fallback
 st.markdown("""
 <style>
     .stApp { background-color: #fdf6e3; }
     [data-testid="stSidebar"] { background-color: #f0f2f6; border-right: 1px solid #e6e9ef; }
     
-    /* Forceful CSS target blocks */
+    /* Hide the default Streamlit elements */
     footer, header, [data-testid="stHeader"], [data-testid="stToolbar"], .stAppDeployButton {
         display: none !important;
         visibility: hidden !important;
@@ -65,11 +65,10 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# 2. Hardcore JavaScript layer to destroy the elements if CSS fails
+# 2. Hardcore JavaScript to reach into the Streamlit Cloud parent frame
 st.components.v1.html("""
 <script>
     function removeElements() {
-        // Target all possible selectors for the header, crown button, and footer
         const selectors = [
             'header', 
             '[data-testid="stHeader"]', 
@@ -80,16 +79,17 @@ st.components.v1.html("""
         ];
         
         selectors.forEach(selector => {
-            // Check main document
+            // Remove from local app context
             document.querySelectorAll(selector).forEach(el => el.remove());
-            // Check inside parent windows (Streamlit Cloud wraps apps in frames)
+            
+            // Reach up and remove from Streamlit Cloud's outer shell frame
             if (window.parent && window.parent.document) {
                 window.parent.document.querySelectorAll(selector).forEach(el => el.remove());
             }
         });
     }
 
-    // Run immediately, and then periodically to catch late-rendering items
+    // Run instantly and check twice a second for injected elements
     removeElements();
     setInterval(removeElements, 500);
 </script>
